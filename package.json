@@ -1,0 +1,37 @@
+{
+  "name": "build-phonegap-webpack-plugin",
+  "version": "0.1.0",
+  "description": "Update configs, convert icons, create archive, upload to build.phonegap.com, compile, download and upload to Google Play",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grinat/build-phonegap-webpack-plugin.git"
+  },
+  "keywords": [
+    "webpack",
+    "plugin",
+    "build phonegap",
+    "phonegap",
+    "deploy"
+  ],
+  "author": "Gabdrashitov Rinat <paladin2012gnu@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/grinat/build-phonegap-webpack-plugin/issues"
+  },
+  "homepage": "https://github.com/grinat/build-phonegap-webpack-plugin#readme",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "axios-https-proxy-fix": "^0.17.1",
+    "archiver": "^2.1.1",
+    "form-data": "^2.3.2",
+    "googleapis": "^29.0.0",
+    "jimp": "^0.2.28"
+  },
+  "peerDependencies": {
+    "webpack": "^1.3.0 || ^2 || ^3"
+  }
+}
