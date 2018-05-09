@@ -15,14 +15,16 @@ class GooglePlay {
         console.log('get google play tokens...')
         await this.initGoogleApi()
         console.log('inserting to google play...')
-        await this.insert()
+        const {data: {id}} = await this.insert()
+        this.googlePlayEditId = id
+        console.log('google play set editId', id)
         console.log('upload to google play...')
-        const {data: {uploadResults}} = await this.upload()
-        console.log('set track for', uploadResults)
-        await this.update(uploadResults.versionCode)
+        const {data: {versionCode}} = await this.upload()
+        console.log('set track for', versionCode)
+        await this.update(versionCode)
         console.log('comiting...')
-        const result = await this.commit()
-        console.log('app in google play ', result)
+        const {data} = await this.commit()
+        console.log('app in google play ', data)
       } else {
         console.log('uploading to GooglePlay skiped, no serviceAccountKeyFilePath')
       }

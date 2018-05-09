@@ -62,6 +62,7 @@ class Prepare {
         }
 
         let versionCodeRegExp = new RegExp(/ versionCode="([^"]+)" /)
+        let versionCodeAndroidRegExp = new RegExp(/ android-versionCode="([^"]+)" /)
         match = data.match(versionRegExp)
         const addZero = (val) => {
           return val > 9
@@ -70,7 +71,7 @@ class Prepare {
         }
         if (match && match.length) {
           let cD = new Date()
-          let versionCode = `${cD.getUTCFullYear()}`
+          let versionCode = `${cD.getUTCFullYear().toString().substring(2, 4)}`
           versionCode += addZero(cD.getUTCMonth() + 1)
           versionCode += addZero(cD.getUTCDate())
           versionCode += addZero(cD.getUTCHours())
@@ -78,6 +79,7 @@ class Prepare {
           needWrite = true
           console.log('version code=', versionCode)
           data = data.replace(versionCodeRegExp, ` versionCode="${versionCode}" `)
+          data = data.replace(versionCodeAndroidRegExp, ` android-versionCode="${versionCode}" `)
         }
 
         if (needWrite === false) {

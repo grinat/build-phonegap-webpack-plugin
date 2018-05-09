@@ -50,4 +50,11 @@ const packageVersion = require('./package.json').version
 1. Enable api in google play dev console in API section: https://play.google.com/apps/publish/#ApiAccessPlace
 2. Go to google dev console https://console.developers.google.com/iam-admin/serviceaccounts
 3. Choose Google Play Android Developer in projects and create account, download key file
-4. Set permision in play console for service account
+4. Set permission in play console for service account
+
+## Version code
+For use version code, set in phonegap config.xml
+```
+versionCode="1" android-versionCode="1"
+```
+It will be replace by code: YYMMDDHHMM in UTC
