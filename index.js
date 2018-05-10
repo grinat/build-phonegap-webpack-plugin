@@ -27,17 +27,26 @@ class BuildPhonegap {
       ],
       archiveName: 'phonegap.zip',
       axiosParams: {},
+      android: {},
+      ios: {},
       repeats: 100,
       delay: 5000
     }, options)
-    this.options.googlePlay = Object.assign({
+    this.options.android = Object.assign({
       packageName: 'com.bla-bla',
       // 1. create in https://console.developers.google.com/iam-admin/serviceaccounts
       // 2. Enable api
       // 3. Set permision in play console for service account
       serviceAccountKeyFilePath: null,
-      track: 'beta'
-    }, options.googlePlay || {})
+      track: 'beta',
+      phonegapSigningKeyId: null,
+      unlockPassword: null,
+      unlockKeystorePassword: null
+    }, options.android || {})
+    this.options.ios = Object.assign({
+      phonegapSigningKeyId: null,
+      unlockPassword: null
+    }, options.ios || {})
     // set options for use in classes
     this.options.configFilePath = path.join(this.options.pathToPhonegap, this.options.configFile)
     if (!this.options.axiosParams.hasOwnProperty('auth')) {

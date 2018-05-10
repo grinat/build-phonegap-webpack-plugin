@@ -36,10 +36,21 @@ const packageVersion = require('./package.json').version
         // where save downloaded app from phonegap
         pathToSaveDownloadedApp: path.resolve(__dirname, '../dist'),
         // google paly options
-        googlePlay: {
+        android: {
+          // set password and phonegapSigningKeyId for unlock
+          unlockPassword: null,
+          unlockKeystorePassword: null,
+          // can be found in https://build.phonegap.com/people/edit section Signing Keys
+          phonegapSigningKeyId: null,
           packageName: 'ru.bla-bal',
           // see section Getting google service account file
           serviceAccountKeyFilePath: path.resolve(__dirname, '../config/api-6399313721890214112-528605-9d76ab573792.json')
+        },
+        ios: {
+          // set password and phonegapSigningKeyId for unlock
+          unlockPassword: null,
+          // can be found in https://build.phonegap.com/people/edit section Signing Keys
+          phonegapSigningKeyId: null,
         }
      })  
      ...

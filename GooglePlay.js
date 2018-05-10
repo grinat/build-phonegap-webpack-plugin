@@ -10,7 +10,7 @@ class GooglePlay {
 
   async runTasks () {
     if (this.options.downloadPlatforms.indexOf('android') > -1) {
-      if (this.options.googlePlay.serviceAccountKeyFilePath) {
+      if (this.options.android.serviceAccountKeyFilePath) {
         this.googlePlayEditId = +new Date()
         console.log('get google play tokens...')
         await this.initGoogleApi()
@@ -34,14 +34,14 @@ class GooglePlay {
 
   async initGoogleApi () {
     const client = await google.auth.getClient({
-      keyFile: this.options.googlePlay.serviceAccountKeyFilePath,
+      keyFile: this.options.android.serviceAccountKeyFilePath,
       scopes: 'https://www.googleapis.com/auth/androidpublisher'
     })
     this.play = google.androidpublisher({
       version: 'v2',
       auth: client,
       params: {
-        packageName: this.options.googlePlay.packageName
+        packageName: this.options.android.packageName
       }
     })
     return true
@@ -73,10 +73,10 @@ class GooglePlay {
   update (versionCode) {
     return this.play.edits.tracks.update({
       editId: this.googlePlayEditId,
-      packageName: this.options.googlePlay.packageName,
-      track: this.options.googlePlay.track,
+      packageName: this.options.android.packageName,
+      track: this.options.android.track,
       resource: {
-        track: this.options.googlePlay.track,
+        track: this.options.android.track,
         versionCodes: [versionCode]
       }
     })

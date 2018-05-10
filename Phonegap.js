@@ -13,6 +13,19 @@ class Phonegap {
   async runTasks () {
     console.log('uploading...')
     await this.uploadArchive()
+    if (this.options.android.unlockPassword) {
+      console.log('unlock android...')
+      await this.unlock('android', {
+        key_pw: this.options.android.unlockPassword,
+        keystore_pw: this.options.android.unlockKeystorePassword
+      })
+    }
+    if (this.options.ios.unlockPassword) {
+      console.log('unlock ios...')
+      await this.unlock('ios', {
+        password: this.options.ios.unlockPassword
+      })
+    }
     console.log('adding to queue...')
     await this.buildApp()
     console.log('waiting compile...')
@@ -27,6 +40,18 @@ class Phonegap {
       }
     }
     return true
+  }
+
+  unlock (platform, data) {
+    let form = new FormData()
+    form.append('data', JSON.stringify(data))
+    return helper.getPostHeaders(form).then(headers => {
+      return axios.put(
+        this.buildDomain + '/api/v1/keys/' + platform + '/' + this.options[platform].phonegapSigningKeyId,
+        form,
+        Object.assign({headers}, this.options.axiosParams)
+      )
+    })
   }
 
   downloadAndSaveApp (platform) {
