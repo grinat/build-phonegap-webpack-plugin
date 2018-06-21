@@ -1,6 +1,11 @@
 # build-phonegap-webpack-plugin
 Update configs, convert icons, create archive, upload to build.phonegap.com, compile, download and upload to Google Play
 
+## Install
+```
+npm i build-phonegap-webpack-plugin --save-dev
+```
+
 ## Usage
 Add to webpack
 ```

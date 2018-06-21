@@ -1,6 +1,6 @@
 {
   "name": "build-phonegap-webpack-plugin",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Update configs, convert icons, create archive, upload to build.phonegap.com, compile, download and upload to Google Play",
   "main": "index.js",
   "scripts": {
