@@ -40,7 +40,7 @@ class Prepare {
   }
 
   updateConfigXml () {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _) => {
       let configChangedFilePath = this.options.configFilePath + '.changed'
       let appVersion = this.options.version || '1.0.0'
       let needWrite = false
@@ -140,7 +140,7 @@ class Prepare {
 
         console.log('archive was created in ' + archiveFilePath)
 
-        resolve()
+        resolve(true)
       })
 
       archive.pipe(output)

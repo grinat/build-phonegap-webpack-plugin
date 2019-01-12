@@ -32,6 +32,7 @@ class BuildPhonegap {
       repeats: 100,
       delay: 5000
     }, options)
+
     this.options.android = Object.assign({
       packageName: 'com.bla-bla',
       // 1. create in https://console.developers.google.com/iam-admin/serviceaccounts
@@ -43,10 +44,12 @@ class BuildPhonegap {
       unlockPassword: null,
       unlockKeystorePassword: null
     }, options.android || {})
+
     this.options.ios = Object.assign({
       phonegapSigningKeyId: null,
       unlockPassword: null
     }, options.ios || {})
+
     // set options for use in classes
     this.options.configFilePath = path.join(this.options.pathToPhonegap, this.options.configFile)
     if (!this.options.axiosParams.hasOwnProperty('auth')) {

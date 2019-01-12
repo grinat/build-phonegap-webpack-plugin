@@ -14,14 +14,18 @@ class GooglePlay {
         this.googlePlayEditId = +new Date()
         console.log('get google play tokens...')
         await this.initGoogleApi()
+
         console.log('inserting to google play...')
         const {data: {id}} = await this.insert()
         this.googlePlayEditId = id
         console.log('google play set editId', id)
+
         console.log('upload to google play...')
         const {data: {versionCode}} = await this.upload()
+
         console.log('set track for', versionCode)
         await this.update(versionCode)
+
         console.log('comiting...')
         const {data} = await this.commit()
         console.log('app in google play ', data)
