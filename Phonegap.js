@@ -1,5 +1,6 @@
 const path = require('path')
 const fs = require('fs')
+const mkdirp = require('mkdirp');
 const axios = require('axios-https-proxy-fix')
 const FormData = require('form-data')
 const helper = require('./helper')
@@ -13,6 +14,7 @@ class Phonegap {
   async runTasks () {
     console.log('uploading...')
     await this.uploadArchive()
+
     if (this.options.android.unlockPassword) {
       console.log('unlock android...')
       await this.unlock('android', {
@@ -20,18 +22,21 @@ class Phonegap {
         keystore_pw: this.options.android.unlockKeystorePassword
       })
     }
+
     if (this.options.ios.unlockPassword) {
       console.log('unlock ios...')
       await this.unlock('ios', {
         password: this.options.ios.unlockPassword
       })
     }
+
     console.log('adding to queue...')
     await this.buildApp()
+
     console.log('waiting compile...')
     let response = await this.checkBuildStatusWhileAllPlatformCompileEnded()
-    console.log('downloading...')
     console.log('compile ended v' + response.version)
+
     if (this.options.pathToSaveDownloadedApp) {
       console.log('start downloading...')
       for (let i = 0; i < this.options.downloadPlatforms.length; i++) {
@@ -62,18 +67,11 @@ class Phonegap {
         responseType: 'arraybuffer'
       })
     ).then(({data}) => {
+      mkdirp.sync(this.options.pathToSaveDownloadedApp)
       let saveTo = path.join(this.options.pathToSaveDownloadedApp, helper.getAppFileNameByPlatform(platform))
-      fs.writeFile(
-        saveTo,
-        data,
-        function (err) {
-          if (err) {
-            throw err
-          }
-          console.log('downloaded and saved to ' + saveTo)
-          return Promise.resolve(true)
-        }
-      )
+      fs.writeFileSync(saveTo, data)
+      console.log('downloaded and saved to ' + saveTo)
+      return Promise.resolve(true)
     })
   }
 
@@ -84,7 +82,8 @@ class Phonegap {
       let delay = i > 0
         ? this.options.delay
         : 0
-      let response = await new Promise((resolve, reject) => {
+
+      let response = await new Promise((resolve, _) => {
         setTimeout(() => {
           axios.get(
             this.buildDomain + '/api/v1/apps/' + this.options.appId,
@@ -96,6 +95,7 @@ class Phonegap {
           })
         }, delay)
       })
+
       if (response && response.status) {
         let errors = []
         let complete = []
@@ -122,6 +122,7 @@ class Phonegap {
           }
           msg.push(platform + ':' + status)
         }
+
         let platformsCount = Object.keys(response.status).length
         let compileCount = errors.length + complete.length
         if (compileCount === platformsCount || completeDownloadsPlatform.length === this.options.downloadPlatforms.length) {
